@@ -11,7 +11,7 @@ This project includes:
 ---
 
 ## 🚀 Live Demo
-👉 [Demo Page](https://your-demo-link.com) *(you can deploy on GitHub Pages)*
+👉 [Demo Page](https://aardaakpinar.github.io/n23/)
 
 ---
 
