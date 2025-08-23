@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N²³ - Kriptografi Sistemi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="">N²³</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#anasayfa">Ana Sayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#algoritma">Algoritma</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#hakkinda">Hakkında</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="anasayfa" class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-2 fw-bold mb-4">N²³</h1>
+            <p class="lead fs-3 mb-4">Yenilikçi Kriptografi Sistemi</p>
+            <p class="fs-5 mb-5">Kareler ve küpler kullanarak güvenli şifreleme</p>
+            <a href="#demo" class="btn btn-light btn-lg px-5 py-3">
+                <i class="fas fa-play me-2"></i>Hemen Dene
+            </a>
+        </div>
+    </section>
+
+    <!-- Algorithm Explanation -->
+    <section id="algoritma" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-3">Algoritma Nasıl Çalışır?</h2>
+                    <p class="lead">N²³ sistemi, matematiksel işlemlerle güvenli şifreleme sağlar</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="text-primary mb-4"><i class="fas fa-lock me-2"></i>Şifreleme Süreci</h3>
+                    
+                    <div class="algorithm-step">
+                        <h5><span class="badge bg-primary me-2">1</span>Anahtar Belirleme</h5>
+                        <p>Her kelimenin ilk harfi anahtar olarak kullanılır. Bu harfin Unicode değeri kaydırma miktarını belirler.</p>
+                    </div>
+
+                    <div class="algorithm-step">
+                        <h5><span class="badge bg-primary me-2">2</span>Harf Şifreleme</h5>
+                        <p>Harfler için: <code class="crypto-formula">Yeni Değer = (Harf + Anahtar)²</code></p>
+                        <p>Her harf Unicode değeri kaydırılır ve karesi alınır.</p>
+                    </div>
+
+                    <div class="algorithm-step">
+                        <h5><span class="badge bg-primary me-2">3</span>Rakam Şifreleme</h5>
+                        <p>Rakamlar için: <code class="crypto-formula">Yeni Değer = ((Rakam + Anahtar) mod 10)³</code></p>
+                        <p>Rakamlar kaydırılır, mod 10 alınır ve küpü hesaplanır.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h3 class="text-success mb-4"><i class="fas fa-unlock me-2"></i>Şifre Çözme Süreci</h3>
+                    
+                    <div class="algorithm-step">
+                        <h5><span class="badge bg-success me-2">1</span>Anahtar Tanıma</h5>
+                        <p>Şifreli metnin ilk karakteri anahtar olarak tanınır.</p>
+                    </div>
+
+                    <div class="algorithm-step">
+                        <h5><span class="badge bg-success me-2">2</span>Kare Kök İşlemi</h5>
+                        <p>Tam kare olan sayılar için karekök alınır ve anahtar çıkarılır.</p>
+                    </div>
+
+                    <div class="algorithm-step">
+                        <h5><span class="badge bg-success me-2">3</span>Küp Kök İşlemi</h5>
+                        <p>Tam küp olan sayılar için küpkök alınır ve ters kaydırma yapılır.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example -->
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h4 class="mb-0"><i class="fas fa-example me-2"></i>Örnek Şifreleme</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Orijinal Metin:</h5>
+                                    <div class="code-block">"merhaba"</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Şifreli Metin:</h5>
+                                    <div class="code-block">"m 44100 49729 45369 42436 42849 42436"</div>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <strong>Açıklama:</strong> "m" harfi anahtar (Unicode: 109). 
+                                    "e" harfi: (101+109)² = 44100, "r" harfi: (114+109)² = 49729, vb.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-3">Canlı Demo</h2>
+                    <p class="lead">N²³ algoritmasını hemen test edin</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-lg">
+                        <div class="card-body p-5">
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    <label for="inputText" class="form-label fs-5 fw-bold">
+                                        <i class="fas fa-edit me-2"></i>Metin Girin:
+                                    </label>
+                                    <textarea 
+                                        class="form-control form-control-lg" 
+                                        id="inputText" 
+                                        rows="4" 
+                                        placeholder="Şifrelemek veya çözmek istediğiniz metni buraya yazın..."
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6 d-grid">
+                                    <button id="encryptBtn" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-lock me-2"></i>Şifrele
+                                    </button>
+                                </div>
+                                <div class="col-md-6 d-grid">
+                                    <button id="decryptBtn" class="btn btn-success btn-lg">
+                                        <i class="fas fa-unlock me-2"></i>Şifre Çöz
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="outputText" class="form-label fs-5 fw-bold">
+                                        <i class="fas fa-output me-2"></i>Sonuç:
+                                    </label>
+                                    <textarea 
+                                        class="form-control form-control-lg" 
+                                        id="outputText" 
+                                        rows="4" 
+                                        readonly
+                                        placeholder="Sonuç burada görünecek..."
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <button class="btn btn-outline-secondary" onclick="clearFields()">
+                                        <i class="fas fa-eraser me-2"></i>Temizle
+                                    </button>
+                                    <button class="btn btn-outline-info ms-2" onclick="copyResult()">
+                                        <i class="fas fa-copy me-2"></i>Sonucu Kopyala
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-3">Özellikler</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 feature-card shadow">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                            <h4>Güvenli Şifreleme</h4>
+                            <p>Matematiksel işlemlerle güçlü şifreleme sağlar</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 feature-card shadow">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-calculator fa-3x text-success mb-3"></i>
+                            <h4>Matematiksel Temel</h4>
+                            <p>Kare ve küp işlemleri ile benzersiz algoritma</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 feature-card shadow">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-language fa-3x text-info mb-3"></i>
+                            <h4>Unicode Desteği</h4>
+                            <p>Tüm dillerde ve karakterlerde çalışır</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="hakkinda" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="display-4 fw-bold mb-4">N²³ Hakkında</h2>
+                    <p class="lead mb-4">
+                        N²³, modern kriptografi prensiplerini matematiksel işlemlerle birleştiren 
+                        yenilikçi bir şifreleme sistemidir. Her kelimenin ilk harfini anahtar olarak 
+                        kullanarak, kareler ve küpler aracılığıyla güvenli şifreleme sağlar.
+                    </p>
+                    <p class="fs-5">
+                        Bu sistem, hem eğitim amaçlı hem de pratik uygulamalar için tasarlanmıştır. 
+                        Basit ama etkili algoritması sayesinde anlaşılması kolay, uygulanması güvenlidir.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 N²³ Kriptografi Sistemi. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/crypto.js"></script>
+</body>
+</html>
