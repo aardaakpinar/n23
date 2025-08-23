@@ -1,7 +1,18 @@
+.custom-navbar {
+    background-color: #2d374829;
+    backdrop-filter: blur(5px); 
+    -webkit-backdrop-filter: blur(5px);
+    transition: background 0.3s ease;
+}
+.navbar .nav-link {
+    color: #FFF;
+    font-weight: 500;
+}
 .hero-section {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 100px 0;
+    height: 100vh;
 }
 .algorithm-step {
     border-left: 4px solid #667eea;
