@@ -1,84 +1,59 @@
-# N²³ Cryptography 🔐
+# N²³ (n23)
 
-**N²³** is a custom cryptography experiment.  
-It uses a unique key-based shifting mechanism combined with **square (n²)** and **cube (n³)** transformations.
+**N²³**, bir kelimenin ilk harfini *anahtar* olarak kullanıp; harfleri `(code + key)²`, rakamları `((digit + key) mod 10)³` biçiminde dönüştüren, öğretici amaçlı bir kriptografi denemesidir. Bu repo, algoritmanın açıklamasını, canlı demoyu ve kullanım örneklerini içerir.
 
-This project includes:
-- Explanation of how N²³ works
-- A Bootstrap-based demo site
-- An interactive playground (encrypt & decrypt your own text)
+> ⚠️ **Güvenlik Uyarısı:** N²³, modern saldırılara karşı güvenli kabul edilemez. Üretim ortamında gerçek gizlilik için standart, kanıtlanmış şemalar (AES, ChaCha20-Poly1305, libsodium vb.) kullanın.
 
 ---
 
-## 🚀 Live Demo
-👉 [Demo Page](https://aardaakpinar.github.io/n23/)
+## N²³ Hakkında
+N²³; anahtarı, kelimenin ilk karakterinin Unicode değeri olarak belirler. Harfler için `(code + key)²`; rakamlar için `((digit + key) mod 10)³` uygulanır. Şifreli temsilde, her **kelime** şu formattadır:
+
+```
+
+<keyChar> <n1> <n2> <n3> ...
+
+````
+
+Birden fazla kelime şifrelerken her kelimeyi **yeni satıra** yazın.
 
 ---
 
-## ⚡ How It Works
-
-### Encryption
-1. Take the **first character** of each word → this is the **key**.
-2. Convert the key to its Unicode code point value.
-3. For the rest of the word:
-   - **Letters (A–Z, a–z, Unicode letters):**
-     - Shift by key value
-     - Square the result → `n²`
-   - **Digits (0–9):**
-     - Shift by key value (mod 10)
-     - Cube the result → `n³`
-   - **Others (punctuation, symbols, spaces):**
-     - Remain unchanged
-     
-### Decryption
-1. Take square root (√) or cube root (∛) of the encrypted numbers.
-2. Reverse the key-based shift.
-3. Reconstruct the original text.
+## Özellikler
+- 🔐 **Matematik tabanlı dönüşümler**: Kare/küp işlemleri.
+- 🌍 **Unicode desteği**: Latin ve yaygın alfabelerle çalışır.
+- 🧮 **Deterministik**: Aynı girdi → aynı çıktı.
+- 🧪 **Canlı Demo**: Tarayıcıda tek dosya ile çalışır (GitHub Pages).
 
 ---
 
-## 🛠️ Example
-
-**Input:**  
-```
-
-Hello 123
-
-```
-
-**Encrypted Output (example):**  
-```
-
-H 29929 30976 31329 31329 32400  1 1728 2744
-
-```
-
-**Decrypted Back:**  
-```
-
-Hello 123
-
-```
+## Bunu kullanarak neler yapılır?
+- ✏️ **Eğitim**: Sayısal dönüşümlerle temel kripto kavramlarını öğretmek.
+- 🔎 **Alıştırma**: Kare/küp, kök alma, mod aritmetiği pratikleri.
+- 🧩 **Bulmaca**: Basit şifreleme oyunları, sınıf içi etkinlikler.
 
 ---
 
-## 🧪 Try It Yourself
+## Canlı Demo
+Repo GitHub Pages ile otomatik yayınlanır:
 
-The demo page includes:
-
-* A text area to enter plain/encrypted text
-* **Encrypt** button → converts plain text to encrypted form
-* **Decrypt** button → restores the original message
+- **URL**: `https://aardaakpinar.github.io/n23/`
+- Push sonrası workflow kendiliğinden dağıtır.
 
 ---
 
-## ⚠️ Disclaimer
+## Algoritma Nasıl Çalışır?
 
-This project is for **educational purposes only**.
-It is **not a secure cryptographic algorithm** and should not be used for real-world security.
+### Şifreleme
+1) **Anahtar**: Kelimenin ilk karakteri `keyChar`. `key = keyChar.codePointAt(0)`
+2) **Harf**: `enc = (codePoint + key)²`
+3) **Rakam**: `enc = ((digit + key) mod 10)³`
+4) **Format**: Çıktı, `keyChar` + şifreli sayı listesi. Birden fazla kelimeyi yeni satıra yazın.
 
----
+### Şifre Çözme
+1) **Anahtar**: Satırın ilk karakteri `keyChar` → `key`.
+2) **Tam kare** ise `sqrt(enc) - key` → harf (geçerli Unicode).
+3) **Tam küp** ise `cbrt(enc)` → `x` → `(x - key) mod 10` → rakam.
+4) Hatalı/uyuşmayan değerlerde satır içinde `�` yer tutucu gösterilir.
 
-## 📜 License
-
-GNU General Public License v3.0 License © 2025
+> Not: Boşluklar kelime ayırıcıdır, yani her satır **bir kelime** kabul edilir.
