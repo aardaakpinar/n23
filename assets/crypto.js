@@ -159,5 +159,5 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("inputText").value = randomText
     showAlert("Örnek metin eklendi!", "info")
   }
-  inputArea.appendChild(sampleBtn)
+  document.querySelector(".row").appendChild(sampleBtn)
 })
