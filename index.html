@@ -11,6 +11,7 @@
   <header>
     <h1>N²³ — Öğretici Kriptografi</h1>
     <p>Kelimenin ilk harfini anahtar alır; harfleri <code>(code + key)²</code>, rakamları <code>((digit + key) mod 10)³</code> ile dönüştürür.</p>
+    <br>
     <p><span class="pill">Eğitim amaçlı</span><span class="pill">Unicode destekli</span><span class="pill">İstemci tarafı</span></p>
   </header>
 
@@ -18,9 +19,8 @@
     <div class="grid">
       <section class="card">
         <h2>Canlı Demo</h2>
-        <p class="muted">Her satır bir <strong>kelime</strong>dir. Şifrelerken çıktı satırları şu formatta olur: <kbd>&lt;keyChar&gt; &lt;n1&gt; &lt;n2&gt; ...</kbd></p>
-        <label for="inputText">Metin (orijinal veya şifreli)</label>
-        <textarea id="inputText" placeholder="Orijinal → şifrelemek için metin girin\nŞifreli → çözmek için her kelimeyi ayrı satıra yazın\n\nÖrnek orijinal: merhaba\nÖrnek şifreli: m 44100 49729 45369 42436 42849 42436"></textarea>
+        <label for="inputText" class="muted">Metin (orijinal veya şifreli)</label>
+        <textarea id="inputText" placeholder="şifrelemek veya çözmek için metin girin"></textarea>
         <div class="row" style="margin-top:12px">
           <button class="btn" id="encryptBtn">Şifrele</button>
           <button class="btn" id="decryptBtn">Çöz</button>
@@ -63,7 +63,7 @@
   </main>
 
   <footer>
-    MIT © <span id="year"></span> — n23
+    AGPL-3.0 license © <span id="year">2025</span> — n23
   </footer>
 
 <script src="assets/crypto.js"></script>
