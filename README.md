@@ -1,105 +1,65 @@
-# N23+ Encryption Algorithm
+# 🛡️ N23 ve N23+ Şifreleme Algoritmaları
 
-N23+ özel geliştirilmiş bir metin şifreleme algoritmasıdır. Temel amacı hafif, hızlı ve tahmin edilmesi zor bir şifreleme modeli sunmaktır. AES veya RSA kadar ağır değildir, ancak klasik basit şifreleme yöntemlerinden çok daha güçlü olacak şekilde tasarlanmıştır.
-
----
-
-## Özellikler
-
-### 🔐 1. Salt (Tuz) Kullanımı
-
-Her şifreleme işleminde rastgele bir **16-bit salt** üretilir. Bu sayede:
-
-* Aynı metin her seferinde farklı şifre üretir.
-* Tekrar eden şifre blokları oluşmaz.
-* Tersine mühendislik ciddi derecede zorlaşır.
-
-Salt şifreli dizgenin en başında HEX formatında saklanır.
+Bu belge, basit, eğitim amaçlı şifreleme/gizleme algoritmaları olan **N23** ve onun geliştirilmiş versiyonu **N23+** hakkındaki teknik bilgileri ve güvenlik değerlendirmesini sunmaktadır.
 
 ---
 
-### 🔐 2. Güçlü İlk Değer
+## 📝 1. N23: Anahtarsız Obfuscation (Gizleme)
 
-Algoritma ilk karakterin Unicode değerini şu şekilde işler:
+N23, veriyi rastgele bir tuz (salt) ve verinin ilk karakterine dayalı olarak gizleyen (obfuscation) bir yöntemdir. Gizli bir anahtar kullanmaz.
 
-```
-(ord(first_char) + 23 + salt) ^ 3
-```
+### ⚙️ Çalışma Prensibi
 
-Böylece herhangi bir üçüncü kişi salt olmadan ilk karakteri matematiksel olarak çıkartamaz.
+1.  **Tuz (Salt) Ekleme:** 1000 ile 9999 arasında rastgele bir tam sayı (`salt`) üretilir ve çıktının ilk bölümünü oluşturur.
+2.  **İlk Değer Hesaplama (Kübik):** İlk şifreli değer (`key`) aşağıdaki formülle hesaplanır:
+    $$
+    \text{key} = (\text{ord}(\text{text}[0]) + 23 + \text{salt})^3
+    $$
+3.  **Zincirleme Hesaplama (Ekleme):** Sonraki her karakter için, yeni şifreli değer, bir önceki değere karakterin ASCII değeri ve karakterin indeksi (`i`) eklenerek bulunur:
+    $$
+    \text{cur} = \text{prev} + i + \text{ord}(\text{text}[i])
+    $$
+4.  Tüm değerler **Hexadecimal** (16'lık) formata çevrilir ve `:` ile birleştirilir.
 
----
+### ⚠️ Güvenlik Notu
 
-### 🔑 3. Zincirleme Değer Hesabı
-
-İlk değerden sonraki her karakter, önceki değer üzerinden hesaplanır:
-
-```
-new_key = previous_key + index + ord(current_char)
-```
-
-Bu yapı sayesinde her karakter bir önceki karaktere bağımlıdır.
-
----
-
-### 🔢 4. HEX Tabanlı Çıktı
-
-Tüm değerler HEX formatında saklanır ve `:` ile ayrılır.
-
-Örnek çıktı:
-
-```
-1A2F:46308:46342:4637C:4639F
-```
+N23, **güvenli değildir** ve yalnızca veriyi okunamayacak hale getirir. Şifreleme anahtarı metnin kendisinden türetildiği için, şifreli metni bilen herkes, herhangi bir gizli bilgiye ihtiyaç duymadan deşifre edebilir.
 
 ---
 
-## Şifreleme Mantığı (Encrypt)
+## 🔒 2. N23+: Anahtarlı Gelişmiş Şifreleme
 
-1. Rastgele bir **salt** oluşturulur.
-2. İlk karakter `(ord + 23 + salt)^3` formülüyle işlenir.
-3. Sonraki karakterler zincir mantığıyla işlenir.
-4. Tüm değerler HEX formatına dönüştürülür.
-5. Sonuç `SALT:KEY1:KEY2:KEY3:...` şeklinde döner.
+N23+, kullanıcı tarafından sağlanan **gizli bir anahtar (Key)** eklenerek N23'ün güvenliğini artıran versiyonudur.
 
----
+### ⚙️ Çalışma Prensibi ve Geliştirmeler
 
-## Çözme Mantığı (Decrypt)
+N23+'da, N23'e ek olarak bir gizli anahtar kullanılır ve anahtarın rastgeleliğini artırmak için kriptografik işlemler uygulanır:
 
-1. Salt okunur.
-2. İlk değer küp kökü alınarak çözülür.
-3. `-23 - salt` uygulanarak ilk karakter elde edilir.
-4. Zincir tersine uygulanarak tüm karakterler geri çözülür.
+1.  **Anahtar Güçlendirme:** Kullanıcı anahtarı, güçlü bir karma fonksiyonu olan **SHA-256** kullanılarak 32 baytlık (256 bit) sabit materyale dönüştürülür.
+    $$
+    \text{KeyBytes} = \text{SHA-256}(\text{User Key})
+    $$
+2.  **Anahtar ile Karıştırma (Tweak):**
+    * **İlk Değer:** Hesaplamaya, SHA-256 çıktısının ilk iki baytından türetilen bir gizli **tweak0** değeri eklenir.
+    * **Zincirleme Değerler:** Zincirleme hesaplamanın her adımında, gizli anahtar materyalinden seçilen dönen bir **tweak** baytı eklenir.
+        $$
+        \text{cur} = \text{prev} + i + \text{ord}(\text{text}[i]) + \mathbf{tweak}
+        $$
 
----
+### 📈 Güvenlik Değerlendirmesi
 
-## Kullanım Örneği
+N23+, **simetrik şifreleme** prensibini uygular. Anahtar, deşifreleme için zorunludur.
 
-### Şifreleme örneği:
-
-```
-Metin: Merhaba
-Şifre: 1F4C:46308:46342:4637C:4639F:463F0:4645A:464D2
-```
-
-### Çözme örneği:
-
-```
-46308:46342:4637C → Merhaba
-```
+* **Avantaj:** Gizli anahtar olmadan şifreli metin kırılamaz, bu da N23'e göre önemli bir güvenlik artışı sağlar.
+* **Uyarı:** Bu, ticari veya hassas verilerin korunması için tasarlanmış, standart bir algoritma **değildir**. Hassas veriler için **AES** gibi endüstriyel standartlar kullanılmalıdır.
 
 ---
 
-## Avantajlar
+## 🔎 3. Özet Karşılaştırma
 
-* Basit ama güçlü bir yapı
-* Salt sayesinde yüksek tahmin edilemezlik
-* HEX sayesinde kolay taşınabilir
-* Tamamen reversible (geri açılabilir)
-* Hafif ve hızlı
-
----
-
-## Güvenlik Notu
-
-Bu algoritma gizli iletişim, oyun içi güvenli veri aktarımı veya özel uygulamalar için uygundur. Ancak finansal, askeri veya kurumsal seviye güvenlik gerektiren ortamlarda **AES, RSA veya benzeri endüstri standardı çözümlerle birlikte** kullanılmalıdır.
+| Özellik | N23 (Anahtarsız) | N23+ (Anahtarlı) |
+| :--- | :--- | :--- |
+| **Gizli Anahtar** | Hayır | **Evet** (Gerekli) |
+| **Anahtar Kullanımı** | Metinden türetilir | **SHA-256 ile güçlendirilir** |
+| **Güvenlik Seviyesi** | Zayıf (Gizleme) | **Orta** (Anahtarlı Gizlilik) |
+| **Deşifreleme** | Şifreli metin yeterli | **Şifreli metin + Gizli Anahtar gerekli** |
